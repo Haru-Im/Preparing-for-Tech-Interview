@@ -1,0 +1,51 @@
+Todo List 애플리케이션을 만들 때, 아이템 추가, 삭제, 완료 상태 토글 등의 기능을 구현해야 했습니다. 
+
+오리지널 Redux를 사용했을 때는 각각의 기능에 대해 액션 타입을 정의하고, 그에 해당하는 액션 생성 함수를 만들어야 했습니다. 
+또한 리듀서에서는 이러한 액션에 따라 상태를 업데이트하는 로직을 구현해야 했고, 이 때 불변성을 유지하는 것에 주의를 기울여야 했습니다. 
+예를 들어, Todo 항목을 추가하는 로직은 아래와 같았습니다.
+
+
+// actions.js
+export const ADD_TODO = 'ADD_TODO';
+
+export function addTodo(text) {
+  return { type: ADD_TODO, text };
+}
+
+// reducers.js
+export function todos(state = [], action) {
+  switch (action.type) {
+    case ADD_TODO:
+      return [...state, { text: action.text, completed: false }];
+    // 다른 액션 핸들러들...
+    default:
+      return state;
+  }
+}
+
+
+이후 Redux Toolkit으로 리펙토링했을 때는 `createSlice` 함수를 사용하여 액션 타입, 액션 생성자, 그리고 리듀서를 한 번에 만들었습니다. 
+Redux Toolkit이 내장하고 있는 Immer 덕분에, 불변성을 신경 쓰지 않고 상태를 업데이트하는 것처럼 코드를 작성할 수 있었습니다. 
+동일한 Todo 항목 추가 기능은 Redux Toolkit을 사용하면 아래와 같이 간결하게 작성할 수 있었습니다.
+
+
+import { createSlice } from '@reduxjs/toolkit';
+
+const todosSlice = createSlice({
+  name: 'todos',
+  initialState: [],
+  reducers: {
+    addTodo: (state, action) => {
+      state.push({ text: action.payload, completed: false });
+    },
+    // 다른 리듀서들...
+  },
+});
+
+export const { addTodo } = todosSlice.actions;
+export default todosSlice.reducer;
+
+
+Redux Toolkit을 사용하면서 가장 느낀 차이점은, 애플리케이션 로직에 더 집중할 수 있었다는 것입니다. 
+Redux Toolkit은 Redux의 복잡성을 많이 줄여주어, 보일러플레이트 코드를 작성하는 것보다 실제 기능 구현에 더 많은 시간과 에너지를 쏟을 수 있게 해주었습니다. 
+또한, 코드의 가독성이 향상되어 유지 보수도 더 쉬워졌습니다.
