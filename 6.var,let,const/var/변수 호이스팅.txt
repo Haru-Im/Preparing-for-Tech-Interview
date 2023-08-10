@@ -1,0 +1,18 @@
+[변수 호이스팅]
+
+- var로 변수를 선언하면 변수 호이스팅에 의해 변수 선언문이 스코프의 선두로 끌어 올려진 것처럼 동작
+- 즉, 변수 호이스팅에 의해 var 키워드로 선언한 변수는 변수 선언문 이전에 참조할 수 있게 됨
+- 단, 할당문 이전에 변수를 참조하면 언제나 undefined를 반환
+    - 이는 ReferenceError를 발생시키는 다른 변수와의 차이점임
+
+(ex.1)
+실제 작성한 코드 :
+console.log(a) // undefined
+var a = 5;
+console.log(a) // 5
+
+실제 해석되는 코드 :
+var a;
+console.log(a); // undefined
+a = 5;
+console.log(a) // 5
