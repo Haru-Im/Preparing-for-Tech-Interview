@@ -1,0 +1,18 @@
+Content-Type은 HTTP 헤더의 하나로, 리소스나 데이터의 미디어 타입(종류)을 명시합니다. 
+웹 클라이언트와 서버가 데이터를 교환할 때, 이 헤더를 통해 데이터의 형식이 무엇인지 알 수 있게 됩니다. 
+이로 인해 클라이언트는 적절한 방식으로 데이터를 처리할 수 있습니다.
+
+다음은 Content-Type 헤더의 몇 가지 예입니다:
+
+- text/html: HTML 문서를 나타냅니다. 웹 페이지의 기본 형식입니다.
+- text/plain: 일반 텍스트 문서를 나타냅니다. 어떤 특별한 서식 없이 순수한 텍스트만 포함됩니다.
+- application/json: JSON(JavaScript Object Notation) 형식의 데이터를 나타냅니다. 웹 API와 클라이언트 간에 데이터를 교환할 때 흔히 사용됩니다.
+- application/xml: XML 형식의 데이터를 나타냅니다.
+- image/jpeg, image/png: 각각 JPEG와 PNG 형식의 이미지를 나타냅니다.
+- application/x-www-form-urlencoded: 웹 폼을 통해 전송된 데이터를 나타냅니다. 키와 값의 쌍으로 이루어진 데이터가 &로 연결되어 전송됩니다.
+- multipart/form-data: 파일 업로드와 같이 여러 부분으로 구성된 데이터를 전송할 때 사용됩니다.
+
+
+
+Content-Type 헤더는 특히 HTTP POST나 PUT 요청에서 중요합니다. 
+이러한 요청은 본문에 데이터를 포함하여 서버로 전송하는데, Content-Type을 통해 해당 데이터의 형식을 알려주어야 서버가 올바르게 데이터를 파싱하고 처리할 수 있습니다.
