@@ -1,0 +1,11 @@
+[SPA]
+- Single Page Application
+- 원하는 부분만 동적으로 교체
+- 뷰를 전환할 떄마다 화면 깜빡임이 없음
+- 일반적으로 렌더링 방식에서 CSR을 사용
+
+[MPA]
+- Multi Page Application
+- 탭을 이동할 떄마다 HTML을 서버에서 새로 받아와 보여주는 형식
+- 뷰를 전환 시마다 화면이 깜빡임
+- 일반적으로 렌더링 방식에서 SSR을 사용
