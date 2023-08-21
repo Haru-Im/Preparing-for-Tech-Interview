@@ -1,0 +1,43 @@
+Q. 라이프사이클 메소드에 대해 설명
+
+A.
+[정의]
+- React에서 라이프사이클 메소드는 React 클래스 컴포넌트에서 컴포넌트의 생명 주기(mounting, updating, unmounting) 동안 특정 시점에 자동으로 호출되는 메소드
+- 이 메소드들은 컴포넌트가 화면에 렌더링되거나 업데이트되거나, 사라질 때 특정 동작을 수행하게 하는 데 사용
+
+
+[종류]
+1. Mounting (생성) : 컴포넌트가 처음 화면에 나타나는 과정
+    - constructor(): 컴포넌트 생성 시 호출되는 생성자 메소드
+    - static getDerivedStateFromProps(): props로부터 state를 도출할 때 사용
+    - render(): UI를 렌더링하는 메소드
+    - componentDidMount(): 컴포넌트가 화면에 나타나게 된 후 호출되는 메소드
+
+2. Updating (업데이트) : state나 props의 변화로 인해 컴포넌트가 재렌더링되는 과정
+    - shouldComponentUpdate(): state나 props의 변화가 발생했을 때, 리렌더링을 할 것인지 결정
+    - getSnapshotBeforeUpdate(): render 호출 후 DOM 업데이트 직전에 호출
+    - componentDidUpdate(): 업데이트가 끝난 후 호출되는 메소드
+
+3. Unmounting (제거) : 컴포넌트가 화면에서 사라지는 과정
+    - componentWillUnmount(): 컴포넌트가 화면에서 사라지기 전에 호출되는 메소드
+
+
+[React의 업데이트에 따른 변화]
+1. 일부 라이프사이클 메소드는 사용이 권장되지 않게 되었음
+이들은 보안 및 성능 문제로 인해 사용을 지양하도록 권장됨
+(예: componentWillMount, componentWillReceiveProps, componentWillUpdate). 
+
+2. React 16.8에서 도입된 Hooks는 함수형 컴포넌트에서도 state와 라이프사이클 기능을 사용할 수 있게 만듦
+
+
+[함수형 컴포넌트와 관련한 hooks를 통한 라이프사이클 접근]
+이 Hook들이 직접적으로 라이프사이클 메소드와 같은 기능을 하는 것은 아님
+하지만, 함수형 컴포넌트 내에서 라이프사이클과 유사한 행동을 수행하도록 도움
+
+1. useState: 함수형 컴포넌트에서 state를 관리하기 위한 Hook
+    상태의 변화는 컴포넌트의 재렌더링을 일으키므로, 이를 통해 컴포넌트의 업데이트 라이프사이클을 관리할 수 있음
+2. useEffect: componentDidMount, componentDidUpdate, componentWillUnmount와 같은 라이프사이클 행동을 합쳐놓은 것과 유사하게 동작. 사이드 이펙트를 관리하기 위한 Hook.
+3. useContext: React의 Context API를 함수형 컴포넌트에서 사용하기 위한 Hook.
+4. useRef: 컴포넌트의 라이프사이클 동안 지속적으로 값을 유지할 수 있는 "참조"를 생성
+
+이 Hook들을 사용하면 함수형 컴포넌트에서도 클래스 컴포넌트의 라이프사이클 메소드에서 수행하던 작업을 효율적으로 처리할 수 있음
