@@ -1,0 +1,80 @@
+[클래스형 사용헀던 이유]
+1. 비공개 메서드 활용: #을 사용하여 비공개 메서드를 정의하고, 클래스 내부에서만 접근 가능하도록 하여 정보 은닉을 실현했습니다. 
+이를 통해 클래스의 내부 로직을 보호하며 API의 안정성을 확보하였습니다.
+
+2. 코드 구조화: 메서드와 상태를 클래스 내에서 명확하게 구분하여 코드의 구조와 흐름을 직관적으로 파악할 수 있었습니다.
+
+3. 재사용성 및 확장성: 필요에 따라 새로운 메서드나 상태를 추가하기 용이하며, 기존의 메서드를 다른 곳에서도 재사용하기 쉬웠습니다.
+
+
+
+// Youtube 클래스는 apiClient를 외부(YoutubeApiContext)로부터 주입받아 호출하는 클래스
+// apiClient에는 search와 videos라는 두 가지 함수가 있구나 예측 가능
+// search는 공개함수, #붙은 것은 비공개함수
+// #searchByKeyword, #mostPopular 메서드 모두 Promise를 반환
+// #search..는 Youtube API의 search 엔드포인트를 호출해 정보를 가져와 가공, promise 반환
+// #most..는 Youtube API의 videos 엔드포인트를 호출해 promise를 반환
+// 즉 Youtube 클래스는 Youtube API를 호출하고 keyword에 해당하는 정보를 가져올 수 있음
+
+export default class Youtube {
+  constructor(apiClient) {
+    this.apiClient = apiClient;
+  }
+
+  async search(keyword) {
+    return keyword ? this.#searchByKeyword(keyword) : this.#mostPopular();
+  }
+
+  // id를 주면 이미지 URL 받아오기
+  async channelImageURL(id) {
+    return this.apiClient
+      .channels({ params: { part: "snippet", id } })
+      .then((res) => res.data.items[0].snippet.thumbnails.default.url);
+  }
+
+  async relatedVideos(id) {
+    return (
+      this.apiClient
+        .search({
+          params: {
+            part: "snippet",
+            maxResults: 25,
+            type: "video",
+            relatedToVideoId: id,
+          },
+        })
+        // id가 객체로 되어있어서 매핑작업
+        .then((res) => res.data.items.map((e) => ({ ...e, id: e.id.videoId })))
+    );
+  }
+
+  async #searchByKeyword(keyword) {
+    return (
+      this.apiClient
+        // search는 비동기 함수 즉 promise를 리턴하는 함수 => then을 이용해 받아온 데이터를 처리
+        .search({
+          params: {
+            part: "snippet",
+            maxResults: 25,
+            type: "video",
+            q: keyword,
+          },
+        })
+        .then((res) => res.data.items.map((e) => ({ ...e, id: e.id.videoId })))
+    );
+  }
+
+  async #mostPopular(keyword) {
+    return this.apiClient
+      .videos({
+        params: {
+          part: "snippet",
+          maxResults: 25,
+          chart: "mostPopular",
+          q: keyword,
+        },
+      })
+      .then((res) => res.data.items);
+  }
+}
+
