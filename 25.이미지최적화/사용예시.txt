@@ -1,0 +1,9 @@
+import imageCompression from "browser-image-compression";
+
+const compressedFile = await imageCompression(files[i], {
+  maxSizeMB: 0.5,
+});
+compressedFiles.push(compressedFile);
+
+
+browser-image-compression이라는 라이브러리를 사용해 이미지 리사이징
