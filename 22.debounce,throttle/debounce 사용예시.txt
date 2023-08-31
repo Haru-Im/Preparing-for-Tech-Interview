@@ -1,0 +1,53 @@
+import { useCallback, useEffect, useState } from "react";
+import _ from "lodash";
+
+export const Count = () => {
+  const [count, setCount] = useState(0);
+
+  // Debounce 사용 시
+  const debouncedCountUp = useCallback(
+    _.debounce(() => setCount((prevCount) => prevCount + 1), 1000),
+    []
+  );
+
+  const debouncedCountDown = useCallback(
+    _.debounce(() => setCount((prevCount) => prevCount - 1), 1000),
+    []
+  );
+
+  // Debounce를 사용하지 않았을 때
+  // const countUp = () => setCount((prevCount) => prevCount + 1);
+  // const countDown = () => setCount((prevCount) => prevCount - 1);
+
+  useEffect(() => {
+    return () => {
+      debouncedCountUp.cancel();
+      debouncedCountDown.cancel();
+    };
+  }, []);
+
+  return (
+    <div>
+      <h2>Debounce</h2>
+      {/* Debounce를 사용했을 때 */}
+      <button onClick={debouncedCountUp}>Count Up</button>
+      <button onClick={debouncedCountDown}>Count Down</button>
+
+      {/* Debounce를 사용하지 않았을 때 */}
+      {/* <button onClick={countUp}>Count Up</button>
+      <button onClick={countDown}>Count Down</button> */}
+      <p>{count}</p>
+    </div>
+  );
+};
+
+CountUp 버튼과 CountDown 버튼을 아무리 많이 클릭해도 1000ms(=1초) 기다리지 않으면 count가 증가하거나 감소하지 않는다.
+
+참고로 debounce나 throttle 함수를 사용하면 꼭 useEffect의 clean-up 함수(return 부분)로 감싸주어야 한다. 
+
+그 이유는 컴포넌트가 언마운트된 이후에도 두 함수에 의해 예약된 함수 호출이 존재하면, 그 함수는 계속해서 실행될 수 있기 때문이다.
+
+이러한 상황은 메모리 누수로 이어질 수 있다.
+
+만약에 컴포넌트가 언마운트되었는데도 컴포넌트의 상태를 변경하는 작업이 이루어진다면 (이 경우에는 debounce나 throttle) 
+이는 Can't perform a React state update on an unmounted component"와 같은 경고를 일으킬 수 있다.

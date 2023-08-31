@@ -1,0 +1,13 @@
+useCallback은 주어진 함수와 dependency를 받아 함수가 재생성되는 것을 막고 최적화를 돕는다.
+
+즉 useCallback은 메모이제이션된 콜백을 반환하여 동일한 의존성이라면 메모이제이션된 함수를 다시 사용한다.
+
+lodash의 debounce나 throttle 함수를 사용할 때, 
+이 함수들이 생성하는 새로운 함수를 각각 컴포넌트의 렌더링 사이에 유지하기 위해서는 useCallback을 사용해야 한다.
+
+만약 useCallback을 사용하지 않는다면 컴포넌트가 리렌더링 될 때마다 새로운 throttle이나 debounce가 생성되어, 
+이전에 생성된 함수의 타이머가 초기화된다.
+
+이로 인해 debounce나 throttle의 기능이 제대로 작동하지 않게 된다.
+
+따라서, useCallback을 사용해 이러한 문제를 제대로 작동하게 할 수 있다.
