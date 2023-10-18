@@ -1,4 +1,4 @@
-# JavaScript의 동작원리와 Event Loop
+# JavaScript의 비동기 처리 (Event Loop와 Call Stack)
 
 ## 1. 자바스크립트와 싱글 스레드
 
@@ -57,7 +57,9 @@ setTimeout(function cb1() {
 console.log("Bye");
 ```
 
+<br/>
 위 코드의 실행 과정은 다음과 같다:
+<br/>
 
 ![1](https://miro.medium.com/v2/resize:fit:720/format:webp/1*9fbOuFXJHwhqa6ToCc_v2A.png)
 처음 상태는 텅 빈 상태이다.
