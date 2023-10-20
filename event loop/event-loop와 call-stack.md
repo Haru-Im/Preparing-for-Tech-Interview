@@ -144,3 +144,9 @@ console.log("Bye");
 `cb1`도 다 실행되었기 때문에 콜스택에서 빠져나간다.
 
 <br/>
+
+레퍼런스  
+https://medium.com/sessionstack-blog/how-javascript-works-event-loop-and-the-rise-of-async-programming-5-ways-to-better-coding-with-2f077c4438b5  
+https://www.youtube.com/watch?v=zi-IG6VHBh8  
+https://velog.io/@yangddu/JS-%EC%9E%90%EB%B0%94%EC%8A%A4%ED%81%AC%EB%A6%BD%ED%8A%B8-%EB%8F%99%EC%9E%91%EC%9B%90%EB%A6%AC  
+https://joshua1988.github.io/web-development/translation/javascript/how-js-works-inside-engine/
